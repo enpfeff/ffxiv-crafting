@@ -1,9 +1,0 @@
-Static:
- - Jafar Ginter: RDM
- - Enpfeff Ginter: SAM
- - Migdetmat OP[midgetmat]: SCH
- - Memphis Kids[jontra28]: AST
- - Dazfro Mermiroirs[DazFro]: WAR
- - Clue Less[Fermi]: Nin
- - Silent Mog[silentmog]: BLM
- - Tank' Sinatra[Tank Sinatra]: PLD
