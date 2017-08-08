@@ -2,53 +2,64 @@
 #MaxThreadsPerHotkey 1
 ProcessName := "FFXIVGAME"
 
-hasFood := True
+; ----------------------------------------------------------
+; 	First Class Vars (Change these)
+; ----------------------------------------------------------
+; Which Macro do you want to use
+macroKey := "60to70dur80"
+; Are you crafting a collectible?
 collectible := False
+; How many times do you want to craft it
 times := 30
-timeOne := 42000
-timeTwo := 28000
+; if you are using food how much food is left in minutes
 foodLeft := 38
-
-foodCounter := foodLeft * 60 * 1000
+; how much time is added to food after each eatting
 timePerFood := 40 * 60 * 1000
-eatFoodThreshold := 5 * 60 * 1000
-willTake := 0
+; at what point in time do you want to eat more food (5 minutes left)
+eatFoodThreshold := 3 * 60000
+; what button is the food on?
+foodKey := 9
 
+
+; ----------------------------------------------------------
+; 	Macro Definitions
+; ----------------------------------------------------------
 class Macro {
-	sequence := []
-	timeTook := 0
+	; an object with the key being what button and the value
+	; being how long to wait after pressing it
+	sequence := Object()
 	hasFood := False
+
+	__New(sequence, hasFood) {
+		this.sequence := sequence
+		this.hasFood := hasFood
+	}
 }
 
-; New Macros ------------------------------------------------>
-; 70 - 70/80 Dur - 1. 38500 2. 17000
-
-
-; Old Macros ------------------------------------------------>
-; 40 Durability
-; 60 to 65 craft 40 Dur - 1. 37000 2. 27000 Time took: 70.32
-; 60 to 65 craft 80 Dur - 1. 40000 2. 35000 Time Took: 75
-; 
-; 80 Durability
-; 60 to 65 craft 80 Dur - 1. 37000 2. 38000 Time Took: 82.125 no peice by peice
-
-; 66 - 70
-; 66 to 70 craft 80 Dur - 1. 42000 2. 28000 Time Took:  80.12
-; 66 to 70 craft 40 Dur - 1. 38000 2. 21000 Time Took:  65.34
-
-; 1 Star
-; 1 star 70 - 1. 40000 2. 32000  Time took: 78.5
+macros := {}
+; 50 < Level < 60 all durability
+macros["old"] := New Macro(Object("1", 38500, "2", 17000), False)
+; 66 - 70 80 Durability
+macros["60to70dur80"] := New Macro(Object("3", 42000, "4", 28000), True)
+; 66 - 70 40 Durability
+macros["60to70dur40"] := New Macro(Object("5", 38000, "6", 21000), True)
+; Level 70 1 star
+macros["1star"] := New Macro(Object("7", 40000, "8", 32000), True)
 
 
 ; ----------------------------------------------------------
 ; 	Stop
+; 	Triggering this will stop the craft at the end of the 
+;   current iteration
 ; ----------------------------------------------------------
 ^F2::
 Stop()
 Return
 
+
 ; ----------------------------------------------------------
 ; 	Start
+; 	Assuming you set all the variables correctly this will
 ; ----------------------------------------------------------
 ^F1::
 WinGet, programid, List, FINAL FANTASY
@@ -57,6 +68,8 @@ running := True
 startTime := A_TickCount
 elapsedTime := A_TickCount
 timeTook := 0
+willTake := 0
+foodCounter := foodLeft * 60 * 1000
 
 ; Main
 Main()
@@ -71,18 +84,18 @@ Main() {
 	global
 
 	running := True
-	Log("Crafting: " times " runs`n")
-	Run(times)
+	Log("Crafting: " times " runs, with " macroKey "`n")
+	Run(times, macros[macroKey])
 }
 
-Run(iterations) {
+Run(iterations, macro) {
 	global
 
 	Loop %iterations% {
 		Log("Starting iteration: " A_Index "/" iterations) 
 
 		; Check that food
-		if (hasFood) {
+		if (macro.hasFood) {
 			; check food 
 			foodCounter := Abs(foodCounter) - Abs(timeTook)
 			Log("Food counter has " foodCounter / 60000 "m")
@@ -97,9 +110,13 @@ Run(iterations) {
 		}
 
 		StartSynthesis()
-		SendToGame("{1}", timeOne)
-		SendToGame("{2}", timeTwo)
-		Sleep 2000
+
+		For button, duration in macro.sequence {
+			aButton := "{" button "}"
+			SendToGame(aButton, duration)
+		}
+
+		Sleep 1500
 		if collectible
 			EndCollectable() 
 		
@@ -114,8 +131,10 @@ Run(iterations) {
 		elapsedTime := A_TickCount
 
 		; Stop?
-		if not running
+		if not running {
+			Log("Done took: " (A_TickCount - startTime) / 60000 "m")
 			break
+		}
 	}
 	Log("Done took: " (A_TickCount - startTime) / 60000 "m")
 	Return
@@ -133,7 +152,7 @@ StartSynthesis() {
 	SendToGame("{Numpad0}", 750)	
 	SendToGame("{Numpad0}", 1000)
 	SendToGame("{Numpad0}", 500)
-	Sleep 1500
+	Sleep 1250
 }
 EndCollectable() {
 	SendToGame("{Numpad0}", 750)	
@@ -148,8 +167,11 @@ SendToGame(KeyToSend, SleepTime) {
 }
 
 EatFood() {
+	global
+
 	Log("Eating Food now")
-	SendToGame("{3}", 3000)
+	button := "{" foodKey "}"
+	SendToGame(button, 3000)
 	Sleep 2000
 	Return
 }
