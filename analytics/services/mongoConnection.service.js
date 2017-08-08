@@ -19,10 +19,11 @@ mongoose.Promise = P;
 let connected = false;
 
 const mongooseConnectionoOpts = {
-    server: {
-        sslValidate: false,
-        poolSize: C.MONGO_POOL_SIZE
-    },
+    useMongoClient: true,
+    socketTimeoutMS: 0,
+    keepAlive: true,
+    reconnectTries: 30,
+    sslValidate: false
 };
 
 
@@ -31,26 +32,9 @@ function init(mongoUrl) {
     let logger = log;
     const MONGO_URL = _.isUndefined(mongoUrl) ? C.MONGO_URL : mongoUrl;
 
-    return new P((resolve, reject) => {
-        if (connected) return resolve(); // In case this is called more than once
+    logger.info(`[Mongoose] Connecting to ${MONGO_URL}`);
+    return mongoose.connect(MONGO_URL, mongooseConnectionoOpts)
 
-        connected = true;
-        logger.info(`[Mongoose] Connecting to ${MONGO_URL}`);
-
-        mongoose.connect(MONGO_URL, mongooseConnectionoOpts, function (e) {
-            if (e) {
-                logger.error(`[Mongoose] error on mongoose connection ${e}`);
-                return reject();
-            }
-            logger.info(`[Mongoose] Mongoose connected`);
-            return resolve();
-        });
-
-        mongoose.connection.on('error', function (e) {
-            logger.error(`[Mongoose] error from mongoose connection ${e}`);
-        });
-
-    });
 }
 
 module.exports = init;

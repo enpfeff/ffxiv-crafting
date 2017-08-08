@@ -1,18 +1,17 @@
 const _ = require('lodash');
 const log = require('./log');
+const Roi = require('../models/roi.model');
 
 // ------------------------------------------------------------------
 //	Main
 // ------------------------------------------------------------------
-module.exports = {
-    analytics
-};
+module.exports = analytics;
 
-// ------------------------------------------------------------------
-//	Funtions
-// ------------------------------------------------------------------
+
 function analytics(craftDetails) {
     if(_.isUndefined(craftDetails.analyze) || !craftDetails.analyze) return;
+
+    const ret = [];
 
 	log.info(`------------------------------------------------------------------`);
 	log.info(`\t${craftDetails.name}`);
@@ -23,7 +22,8 @@ function analytics(craftDetails) {
 
 	log.info(`\t--- Just Crafting ---`);
 	const wholesalePerCraft = _.reduce(craftDetails.craft, (result, details) => result += details.price, 0);
-	analyzeOne(wholesalePerCraft);
+	let rois = analyzeOne(wholesalePerCraft, craftDetails.craft, false);
+	ret.push(rois);
 
 	log.info(`\t--- With Sourced Materials ---`);
 	const wholesalePerCraftSourced = _.reduce(craftDetails.craft, (result, details) => {
@@ -32,8 +32,12 @@ function analytics(craftDetails) {
 		return result;
 	}, 0);
 
-	analyzeOne(wholesalePerCraftSourced);
-	function analyzeOne(wholesalePerCraft) {
+    rois = analyzeOne(wholesalePerCraftSourced, craftDetails.craft, true);
+	ret.push(rois);
+
+	return ret;
+
+	function analyzeOne(wholesalePerCraft, recipe, sourced) {
 		// how much is a craft worth?
 		const marketPerCraft = marketValuePerItem * itemsPerCraft;
 		// how much does a craft cost/item?
@@ -52,15 +56,24 @@ function analytics(craftDetails) {
 		log.info(`\tearnings/craft:\t\t ${toFormatCurrancy(earningsPerCraft)}`);
 		log.info(`\tROI:\t\t\t ${ROI.toFixed(2)}%`);
 
-		return {
-		    roi: ROI,
-            earningsPerCraft,
-            marketPerCraft,
-            wholsalePerItem,
-            wholesalePerCraft
-        };
+		return new Roi({
+            name: craftDetails.name,
+            time: new Date(),
+            recipe: _.map(recipe, (details, name) => {
+                return { name, price: details.price };
+            }),
+            values: {
+                roi: ROI,
+                earningsPerCraft,
+                marketPerCraft,
+                wholsalePerItem,
+                wholesalePerCraft
+            },
+            meta: {
+                sourced
+            }
+        });
 	}
-
 }
 
 
