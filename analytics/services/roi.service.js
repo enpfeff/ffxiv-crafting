@@ -1,11 +1,12 @@
 const _ = require('lodash');
-const crafts = require('./input.config');
-const log = require('./services/log');
+const log = require('./log');
 
 // ------------------------------------------------------------------
 //	Main
 // ------------------------------------------------------------------
-_.each(crafts, analytics);
+module.exports = {
+    analytics
+};
 
 // ------------------------------------------------------------------
 //	Funtions
