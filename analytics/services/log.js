@@ -27,7 +27,7 @@ if (C.LOG_TO_FILE) {
         filename: C.LOG_FILE,
         colorize: true,
         timestamp: true,
-        maxsize: Math.pow(10, 8),            //100mb
+        maxsize: Math.pow(10, 8),
         tailable: true,
         maxFiles: 100,
         json: false
