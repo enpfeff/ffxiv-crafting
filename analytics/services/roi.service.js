@@ -60,7 +60,11 @@ function analytics(craftDetails) {
             name: craftDetails.name,
             time: new Date(),
             recipe: _.map(recipe, (details, name) => {
-                return { name, price: details.price };
+                return {
+                	name,
+					price: details.price,
+					sourced: !_.isUndefined(details.sourced) && details.sourced
+                };
             }),
             values: {
                 roi: ROI,

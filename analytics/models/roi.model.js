@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 
 const recipeSchema = mongoose.Schema({
     price: Number,
-    name: String
+    name: String,
+    sourced: {type: Boolean, default: false}
 }, { _id : false });
 
 const roiSchema = new Schema({
