@@ -6,15 +6,15 @@ ProcessName := "FFXIVGAME"
 ; 	First Class Vars (Change these)
 ; ----------------------------------------------------------
 ; Which Macro do you want to use
-macroKey := "60to70dur80"
+macroKey := "old"
 ; Are you crafting a collectible?
 collectible := False
 ; How many times do you want to craft it
-times := 30
+times := 24
 ; if you are using food how much food is left in minutes
-foodLeft := 38
+foodLeft := 37
 ; how much time is added to food after each eatting
-timePerFood := 40 * 60 * 1000
+timePerFood := 40 * 60000
 ; at what point in time do you want to eat more food (5 minutes left)
 eatFoodThreshold := 3 * 60000
 ; what button is the food on?
@@ -38,14 +38,15 @@ class Macro {
 
 macros := {}
 ; 50 < Level < 60 all durability
-macros["old"] := New Macro(Object("1", 38500, "2", 17000), False)
+macros["old"] := New Macro(Object("1", 38500, "2", 17250), False)
 ; 66 - 70 80 Durability
 macros["60to70dur80"] := New Macro(Object("3", 42000, "4", 28000), True)
 ; 66 - 70 40 Durability
 macros["60to70dur40"] := New Macro(Object("5", 38000, "6", 21000), True)
 ; Level 70 1 star
 macros["1star"] := New Macro(Object("7", 40000, "8", 32000), True)
-
+; 
+macros["justDoIt"] := New Macro(Object("-", 12000), False)
 
 ; ----------------------------------------------------------
 ; 	Stop
@@ -59,7 +60,7 @@ Return
 
 ; ----------------------------------------------------------
 ; 	Start
-; 	Assuming you set all the variables correctly this will
+; 	Assuming you set all the variables correctly this will DO IT
 ; ----------------------------------------------------------
 ^F1::
 WinGet, programid, List, FINAL FANTASY
@@ -84,7 +85,7 @@ Main() {
 	global
 
 	running := True
-	Log("Crafting: " times " runs, with " macroKey "`n")
+	Log("Crafting: " times " runs with " macroKey " Macro`n")
 	Run(times, macros[macroKey])
 }
 
@@ -116,7 +117,7 @@ Run(iterations, macro) {
 			SendToGame(aButton, duration)
 		}
 
-		Sleep 1500
+		Sleep 1000
 		if collectible
 			EndCollectable() 
 		
@@ -131,10 +132,9 @@ Run(iterations, macro) {
 		elapsedTime := A_TickCount
 
 		; Stop?
-		if not running {
-			Log("Done took: " (A_TickCount - startTime) / 60000 "m")
+		if not running 
 			break
-		}
+		
 	}
 	Log("Done took: " (A_TickCount - startTime) / 60000 "m")
 	Return
