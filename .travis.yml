@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "7.7.x"
+
+before_install:
+install:
+  - npm i
+cache:
+  directories:
+    - "node_modules"

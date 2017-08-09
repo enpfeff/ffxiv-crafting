@@ -54,7 +54,7 @@ function analytics(craftDetails) {
 		log.info(`\twholesale/Item:\t\t ${toFormatCurrancy(wholsalePerItem)}`);
 		log.info(`\tmarket value/Craft:\t ${toFormatCurrancy(marketPerCraft)}`);
 		log.info(`\tearnings/craft:\t\t ${toFormatCurrancy(earningsPerCraft)}`);
-		log.info(`\tROI:\t\t\t ${ROI.toFixed(2)}%`);
+		log.info(`\tROI:\t\t\t\t ${ROI.toFixed(2)}%`);
 
 		return new Roi({
             name: craftDetails.name,
