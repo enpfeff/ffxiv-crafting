@@ -2,10 +2,10 @@
  * Created by enpfeff on 8/7/17.
  */
 const _ = require('lodash');
-const RoiService = require('./services/roi.service');
+const RoiService = require('../server/services/roi.service');
 const crafts = require('./input.config');
 const P = require('bluebird');
-const log = require('./services/log');
+const log = require('../server/services/log');
 
 // ------------------------------------------------------------------
 //	Main
@@ -17,7 +17,7 @@ const models = _.chain(crafts)
     .value();
 
 if(process.env.INSERT === 'true') {
-    const connection = require('./services/mongoConnection.service');
+    const connection = require('../server/services/mongoConnection.service');
 
     return connection()
         .then(() => {
