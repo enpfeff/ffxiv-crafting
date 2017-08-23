@@ -6,23 +6,24 @@ ProcessName := "FFXIVGAME"
 ; 	First Class Vars (Change these)
 ; ----------------------------------------------------------
 ; Which Macro do you want to use
-macroKey := "old"
+macroKey := "2star"
 ; Are you crafting a collectible?
 collectible := False
 ; How many times do you want to craft it
-times := 24
+times := 5
 ; if you are using food how much food is left in minutes
-foodLeft := 37
+foodLeft := 38
 ; how much time is added to food after each eatting
 timePerFood := 40 * 60000
 ; at what point in time do you want to eat more food (5 minutes left)
 eatFoodThreshold := 3 * 60000
 ; what button is the food on?
-foodKey := 9
-
+foodKey := "="
+; Sometimes the macro doesnt need food
+foodOverride := False
 
 ; ----------------------------------------------------------
-; 	Macro Definitions
+; 	Macro Definitionsbsa
 ; ----------------------------------------------------------
 class Macro {
 	; an object with the key being what button and the value
@@ -40,13 +41,16 @@ macros := {}
 ; 50 < Level < 60 all durability
 macros["old"] := New Macro(Object("1", 38500, "2", 17250), False)
 ; 66 - 70 80 Durability
-macros["60to70dur80"] := New Macro(Object("3", 42000, "4", 28000), True)
+macros["60to70dur80"] := New Macro(Object("3", 42000, "4", 28000), False)
 ; 66 - 70 40 Durability
 macros["60to70dur40"] := New Macro(Object("5", 38000, "6", 21000), True)
 ; Level 70 1 star
-macros["1star"] := New Macro(Object("7", 40000, "8", 32000), True)
-; 
-macros["justDoIt"] := New Macro(Object("-", 12000), False)
+; macros["1star"] := New Macro(Object("7", 40000, "8", 32000), True)
+; 2 star macro
+macros["2star"] := New Macro(Object("7", 38600, "8", 40000), True)
+; just gets it done 
+macros["justDoIt"] := New Macro(Object("9", 12000), False)
+
 
 ; ----------------------------------------------------------
 ; 	Stop
