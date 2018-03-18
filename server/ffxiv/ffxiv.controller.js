@@ -3,11 +3,18 @@ const service = Service();
 const _ = require('lodash');
 
 module.exports = {
-    getItemsForRecipe
+    getItemsForRecipe,
+    search
 };
 
+async function search(req, res) {
+    const query = req.query.query;
+    const result = await service.search(query);
+    res.json(result);
+}
+
 async function getItemsForRecipe(req, res) {
-    const whatIWantToMake = _.castArray(JSON.parse(req.query.recipes));
+    const whatIWantToMake = _.castArray(_.map(req.query.recipes, JSON.parse));
     const recipes = await Promise.all(_.map(whatIWantToMake, async thing => await service.getRecipe(thing.name, thing.quantity || 1)));
     const mats = combineRecipe(recipes);
 
@@ -22,6 +29,12 @@ async function getItemsForRecipe(req, res) {
                 return acc;
             }, fullRecipe)
         });
-        return fullRecipe;
+
+        return _.map(fullRecipe, (val, key) => {
+            return {
+                name: key,
+                quantity: val
+            };
+        });
     }
 }

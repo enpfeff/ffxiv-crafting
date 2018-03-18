@@ -7,7 +7,6 @@ const vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
   loader: 'eslint-loader',
@@ -36,7 +35,9 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
-      _
+      env: process.env.NODE_ENV === 'production'
+        ? path.join(__dirname, '../config/prod.env.js')
+        : path.join(__dirname, '../config/dev.env.js')
     }
   },
   module: {

@@ -1,13 +1,18 @@
 const axios = require('axios');
-
+const env = require('env');
 module.exports = service;
 
 function service() {
   return {
-    getRecipes
+    getRecipes,
+    searchRecipes
   };
 
+  function searchRecipes(query) {
+    return axios({method: 'GET', url: `${env.API}/recipe/search`, params: { query }});
+  }
+
   function getRecipes(recipes) {
-    return axios({method: 'GET', url: `http://localhost:3000/recipe`, params: { recipes }})
+    return axios({method: 'GET', url: `${env.API}/recipe`, params: { recipes }})
   }
 }

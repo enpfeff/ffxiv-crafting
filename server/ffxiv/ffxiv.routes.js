@@ -5,6 +5,7 @@ module.exports = routes;
 
 function routes(app) {
     router.get('/', controller.getItemsForRecipe);
+    router.get('/search', controller.search);
 
     app.use('/recipe', router);
 }
