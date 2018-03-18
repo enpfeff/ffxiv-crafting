@@ -1,4 +1,4 @@
-﻿#Include, common.ahk
+#Include, common.ahk
 #MaxThreadsPerHotkey 1
 ProcessName := "FFXIVGAME"
 
@@ -6,13 +6,13 @@ ProcessName := "FFXIVGAME"
 ; 	First Class Vars (Change these)
 ; ----------------------------------------------------------
 ; Which Macro do you want to use
-macroKey := "2star"
+macroKey := "3starSpecial"
 ; Are you crafting a collectible?
 collectible := False
 ; How many times do you want to craft it
-times := 5
+times := 52
 ; if you are using food how much food is left in minutes
-foodLeft := 38
+foodLeft := 20
 ; how much time is added to food after each eatting
 timePerFood := 40 * 60000
 ; at what point in time do you want to eat more food (5 minutes left)
@@ -23,7 +23,7 @@ foodKey := "="
 foodOverride := False
 
 ; ----------------------------------------------------------
-; 	Macro Definitionsbsa
+; 	Macro Definitions
 ; ----------------------------------------------------------
 class Macro {
 	; an object with the key being what button and the value
@@ -38,19 +38,17 @@ class Macro {
 }
 
 macros := {}
-; 50 < Level < 60 all durability
-macros["old"] := New Macro(Object("1", 38500, "2", 17250), False)
-; 66 - 70 80 Durability
-macros["60to70dur80"] := New Macro(Object("3", 42000, "4", 28000), False)
-; 66 - 70 40 Durability
-macros["60to70dur40"] := New Macro(Object("5", 38000, "6", 21000), True)
-; Level 70 1 star
-; macros["1star"] := New Macro(Object("7", 40000, "8", 32000), True)
-; 2 star macro
-macros["2star"] := New Macro(Object("7", 38600, "8", 40000), True)
-; just gets it done 
-macros["justDoIt"] := New Macro(Object("9", 12000), False)
 
+macros["502star"] := New Macro(Object("6", 18500), False)
+macros["503star"] := New Macro(Object("1", 20000), False)
+macros["68andBelow"] := New Macro(Object("7", 40500), False)
+macros["68below40"] := New Macro(Object("0", 39000), False)
+macros["60to70dur80"] := New Macro(Object("2", 37000, "3", 19000), False)
+macros["3star"] := New Macro(Object("8", 38000, "9", 42000), False)
+macros["3starSpecial"] := New Macro(Object("8", 41000, "9", 42000), False)
+macros["60to70dur40"] := New Macro(Object("5", 38000, "6", 21000), True)
+macros["2star"] := New Macro(Object("7", 38600, "8", 40000), True)
+macros["justDoIt"] := New Macro(Object("9", 12000), False)
 
 ; ----------------------------------------------------------
 ; 	Stop

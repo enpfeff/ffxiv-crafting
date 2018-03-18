@@ -3,7 +3,7 @@
  */
 const _ = require('lodash');
 const RoiService = require('../server/services/roi.service');
-const crafts = require('./input.config');
+const crafts = require('./roiInput.config');
 const P = require('bluebird');
 const log = require('../server/services/log');
 
