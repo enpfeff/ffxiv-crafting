@@ -1,4 +1,6 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
+const path = require('path');
 const _ = require('lodash');
 const log = require('./services/log');
 const C = require('./services/constants');
@@ -12,6 +14,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
+app.use(express.static(path.join(__dirname, '../ui/dist')));
 
 _.each(ENABLED_MODULES, module => module(app));
 

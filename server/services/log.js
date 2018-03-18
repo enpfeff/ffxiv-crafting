@@ -12,13 +12,26 @@
 
 const _ = require('lodash');
 const winston = require('winston');
+require('winston-papertrail').Papertrail;
+
 const C = require('./constants');
 
 const loglevel = C.LOG_LEVEL;
 //By default we log to STDOUT (the Console)
+let winstonPapertrail = null;
+if(C.PAPERTRAIL_URL && C.PAPERTRAIL_PORT) {
+     winstonPapertrail = new winston.transports.Papertrail({
+        host: C.PAPERTRAIL_URL,
+        port: C.PAPERTRAIL_PORT
+    });
+}
+
+
 let transports = [
-    new (winston.transports.Console)({level: loglevel, colorize: true, timestamp: true})
+    new (winston.transports.Console)({level: loglevel, colorize: true, timestamp: true}),
 ];
+
+if(winstonPapertrail) transports.push(winstonPapertrail);
 
 if (C.LOG_TO_FILE) {
     //If logging to file, don't also log to console.
@@ -33,6 +46,8 @@ if (C.LOG_TO_FILE) {
         json: false
     }));
 }
+
+
 
 const logger = new (winston.Logger)({
     transports: transports
