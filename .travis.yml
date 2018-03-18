@@ -1,10 +1,19 @@
 language: node_js
 node_js:
-  - "7"
-
-before_install:
+- '8'
+before_install: 
 install:
-  - npm i
+- npm i
+- cd ui && npm i
 cache:
   directories:
-    - "node_modules"
+  - node_modules
+script:
+  - cd ui && npm run build
+deploy:
+  provider: heroku
+  api_key:
+    secure: nPAFL1l9kHuTo9bvCw5T+wnuADj1fVVkNffP8BBFX/0vCDwT6E1E15lyz+DcBjuNDFHiFi/LpznSNPmjiT/8VkdykK+3BilFku5zW1fbK/46mUnri8Gq3Je/ywoW9HWzUYYx89NfN2Zx3OFpAZvqQvlO+TkcPBMuAlVkh9GqoFN5+7KFaHaRBwmeUdk2kflFctOuODz9f+ucTN+c221MqfVzInSxEyR+IOBTYkd5wwdBw2iiwEek80/ogW9uBR1oplc5VjqlipeRb40wlqH6k/aoycnegs/2Ws3EqaK5xisVzABRYaEqj6GhS+xc3J4rCPSacwTF9923GZQ1aGV5VSN1D33tpPXcioXjrGPrXettcBYPQDcJ11WRJ+S26UBG50Cgln3hc2/fTgvaI7q4KMqXR/MNb3KYuTDk+h6MS/cC+cvbvtc3OHDsR34o9QNS+3l6gZ3RaPlROKuNyNaeuhLF9dxAiD2c+F1kLsJ0UkCXaFeo7RwVwzFsPr85yDlZN9nNuaHCiv/2JziSwpsJBVY9RSGYPZjt4X9fOU5oW/JADkyRExC7PnPhLxGegtkk1bU945U18LcQh7mfiZNDhOEwjUcdbNZbRuV2V4tReGYvel9tr9sJNV3QeyqrmKCAqr3g+gI4dwfuyEANOFrSiHtvDWqjFsRNmPy2OfrL6yI=
+  app: ffxiv
+  on:
+    repo: enpfeff/ffxiv-crafting
