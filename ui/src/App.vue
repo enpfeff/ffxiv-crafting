@@ -1,13 +1,14 @@
 <template>
-  <div id="app">
-    <v-app>
-      <v-content>
-        <v-container fluid>
-          <router-view/>
-        </v-container>
-      </v-content>
-    </v-app>
-  </div>
+  <v-app dark>
+    <v-toolbar app>
+      <v-toolbar-title>Stormblood Recipe</v-toolbar-title>
+    </v-toolbar>
+    <v-content>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
