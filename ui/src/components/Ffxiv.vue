@@ -14,9 +14,9 @@
         <template v-for="(item, index) in recipes">
           <v-list-tile>
             <v-list-tile-content>
-              <v-list-tile-title v-html="item"></v-list-tile-title>
+              <v-list-tile-title v-html="item.name"></v-list-tile-title>
             </v-list-tile-content>
-            <v-list-tile-action @click="removeRecipe()">
+            <v-list-tile-action @click="removeRecipe(item)">
               <v-btn icon ripple>
                 <v-icon color="grey lighten-1">delete</v-icon>
               </v-btn>
@@ -30,17 +30,19 @@
 </template>
 
 <script>
+const _ = require('lodash');
+
 export default {
   name: 'Ffxiv',
   data,
   methods: {
     addRecipe() {
-      this.recipes.push(this.recipe);
+      this.recipes.push({name: this.recipe});
       this.recipe = '';
     },
 
-    removeRecipe() {
-
+    removeRecipe(item) {
+      this.recipes.splice(this.recipes.indexOf(item), 1);
     }
   }
 }
