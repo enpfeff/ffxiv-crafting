@@ -12,13 +12,13 @@
       </div>
       <v-list v-else one-line>
         <template v-for="(item, index) in recipes">
-          <v-list-tile @click="removeRecipe()">
+          <v-list-tile>
             <v-list-tile-content>
               <v-list-tile-title v-html="item"></v-list-tile-title>
             </v-list-tile-content>
-            <v-list-tile-action>
+            <v-list-tile-action @click="removeRecipe()">
               <v-btn icon ripple>
-                <v-icon color="grey lighten-1">info</v-icon>
+                <v-icon color="grey lighten-1">delete</v-icon>
               </v-btn>
             </v-list-tile-action>
           </v-list-tile>
