@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const log = require('../services/log');
+const R = require('request-promise');
 module.exports = FxivService;
 
 function FxivService(endpoint) {

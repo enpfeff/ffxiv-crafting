@@ -6,11 +6,11 @@ ProcessName := "FFXIVGAME"
 ; 	First Class Vars (Change these)
 ; ----------------------------------------------------------
 ; Which Macro do you want to use
-macroKey := "3starSpecial"
+macroKey := "60to70dur80"
 ; Are you crafting a collectible?
-collectible := False
+collectible := True
 ; How many times do you want to craft it
-times := 52
+times := 11
 ; if you are using food how much food is left in minutes
 foodLeft := 20
 ; how much time is added to food after each eatting

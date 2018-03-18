@@ -5,18 +5,23 @@ const Service = require('../server/ffxiv/ffxiv.service');
 const service = Service();
 
 const whatIWantToMake = [{
-    name: 'Slothskin Belt of Scouting',
+    name: 'True Linen Robe of Healing',
+}, {
+    name: 'True Linen Breeches of Healing'
+}, {
+    name: 'Slothskin Belt of Healing'
+}, {
+    name: 'Silvergrace Ring of Healing',
     quantity: 2
 }, {
-    name: 'Slothskin Belt of Aiming',
-    quantity: 1
+    name: 'Black Willow Armillae of Healing'
 }];
 
 init();
 
 async function init() {
     // get item by name
-    const recipes = await Promise.all(_.map(whatIWantToMake, async thing => await service.getRecipe(thing.name, thing.quantity)));
+    const recipes = await Promise.all(_.map(whatIWantToMake, async thing => await service.getRecipe(thing.name, thing.quantity || 1)));
     const mats = combineRecipe(recipes);
 
     log.info(JSON.stringify(mats, null, 4));
@@ -33,6 +38,12 @@ function combineRecipe(recipes) {
             return acc;
         }, fullRecipe)
     });
-    return fullRecipe;
+
+    return _.map(fullRecipe, (val, key) => {
+        return {
+            name: key,
+            quantity: val
+        };
+    });
 }
 
