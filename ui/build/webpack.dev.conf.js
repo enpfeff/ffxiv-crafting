@@ -7,6 +7,7 @@ const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FavIconPlugin = require('favicons-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
@@ -45,6 +46,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }
   },
   plugins: [
+    new FavIconPlugin({
+      logo: path.resolve(path.join(__dirname, '../static/icon.png')),
+      prefix: 'icons-[hash]/',
+      statsFilename: 'iconstats-[hash].json',
+      persistentCache: true,
+      inject: true,
+      title: 'Dae Whey',
+      background: '#444'
+    }),
     new webpack.DefinePlugin({
       'process.env': require('../config/dev.env')
     }),
