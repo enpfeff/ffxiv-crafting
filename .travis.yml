@@ -4,7 +4,7 @@ node_js:
 before_install: 
 install:
 - npm i
-- cd ui && npm i
+- cd ui && npm i && cd ..
 cache:
   directories:
   - node_modules
