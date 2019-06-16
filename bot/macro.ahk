@@ -1,20 +1,9 @@
 #Include, %A_ScriptDir%\common.ahk
-#Include, %A_ScriptDir%\macros.ahk
+#Include, %A_ScriptDir%\config.ahk
 #MaxThreadsPerHotkey 1
 #SingleInstance, Force
 
-; ----------------------------------------------------------
-; 	First Class Vars (Change these)
-; ----------------------------------------------------------
-; Which Macro do you want to use
-global macroKey := "502star"
-; Are you crafting a collectible?
-global collectible := True
-; How many times do you want to craft it
-global times := 11
-; is the craft currently running -- dont touch this
 global running := False
-
 return
 
 ; ----------------------------------------------------------
