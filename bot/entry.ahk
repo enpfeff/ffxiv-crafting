@@ -4,6 +4,7 @@
 #SingleInstance, Force
 
 global running := False
+global moveEvery30IsActive := False
 return
 
 ; ----------------------------------------------------------
@@ -30,6 +31,10 @@ return
 	Stop()
 	return
 
+^F3::
+	moveEvery30IsActive := True
+	MoveEvery30()
+	return
 ; ----------------------------------------------------------
 ; 	Interrupt Stop
 ; 	This will stop the program at this instant
@@ -132,4 +137,14 @@ Consume(consumable) {
 	button := "{" consumable.key "}"
 	SendToGame(button, 5 * second)
 	IntoCrafting()
+}
+
+MoveEvery30() {
+	if(!moveEvery30IsActive) {
+		Exit()
+	}
+	Log("Moving")
+	SendToGame("n", 100)
+	Sleep 20000
+	MoveEvery30()
 }

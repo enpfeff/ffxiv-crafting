@@ -2,11 +2,11 @@
 ; 	Consumable Definitions
 ; ----------------------------------------------------------
 ; Which Macro do you want to use
-global macroKey := "502star"
+global macroKey := "turnIn"
 ; Are you crafting a collectible?
 global collectible := True
 ; How many times do you want to craft it
-global times := 11
+global times := 6
 
 ; ----------------------------------------------------------
 ; 	Consumable Definitions
@@ -15,11 +15,11 @@ global times := 11
 ; 	what key to press, 
 ;	how long does it last, 
 ;	any initial time, 
-;	at what point in time should i consume more,
+;	at what time left should i consume more,
 ;	for logging what do you want to call this
 ;	)
-food := New Consumable("=", 40 * minute, 4 * minute, 3 * minute, "food")
-tea := New Consumable("-", 15 * minute, 0, 2 * minute, "tea")
+global food := New Consumable("=", 40 * minute, 4 * minute, 3 * minute, "food")
+global tea := New Consumable("-", 15 * minute, 0, 2 * minute, "tea")
 
 ; ----------------------------------------------------------
 ; 	Macro Definitions
@@ -30,3 +30,4 @@ tea := New Consumable("-", 15 * minute, 0, 2 * minute, "tea")
 ;	)
 global macros := {}
 macros["502star"] := New Macro([{button: 6, duration: 5 * second}], [food])
+macros["turnIn"] := New Macro([{button: 1, duration: 34 * second}], [])
