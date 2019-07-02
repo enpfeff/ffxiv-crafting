@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------
-; 	Consumable Definitions
+; 	Global Flags
 ; ----------------------------------------------------------
 ; Which Macro do you want to use
 global macroKey := "turnIn"
