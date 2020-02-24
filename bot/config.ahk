@@ -1,12 +1,12 @@
 ; ----------------------------------------------------------
 ; 	Global Flags
 ; ----------------------------------------------------------
-; Which Macro do you want to use
-global macroKey := "turnIn"
+; Which Macro do you want to usen
+global macroKey := "star3"
 ; Are you crafting a collectible?
-global collectible := True
+global collectible := False
 ; How many times do you want to craft it
-global times := 6
+global times := 12
 
 ; ----------------------------------------------------------
 ; 	Consumable Definitions
@@ -18,8 +18,8 @@ global times := 6
 ;	at what time left should i consume more,
 ;	for logging what do you want to call this
 ;	)
-global food := New Consumable("=", 40 * minute, 4 * minute, 3 * minute, "food")
-global tea := New Consumable("-", 15 * minute, 0, 2 * minute, "tea")
+global food := New Consumable("=", 40 * minute, 20 * minute, 3 * minute, "food")
+global tea := New Consumable("-", 15 * minute, 14 * minute, 2 * minute, "tea")
 
 ; ----------------------------------------------------------
 ; 	Macro Definitions
@@ -29,5 +29,14 @@ global tea := New Consumable("-", 15 * minute, 0, 2 * minute, "tea")
 ;	an array of consumables that are needed for the craft
 ;	)
 global macros := {}
-macros["502star"] := New Macro([{button: 6, duration: 5 * second}], [food])
+macros["whiteScrip"] := New Macro([{button: 1, duration: 32 * second}], [])
+macros["doIt2star"] := New Macro([{button: 6, duration: 18 * second}], [])
+macros["star3"] := New Macro([{button: 4, duration: 38000}, {button: 5, duration: 13000}], [food])
+
 macros["turnIn"] := New Macro([{button: 1, duration: 34 * second}], [])
+macros["doIt3"] := New Macro([{button: 3, duration: 11 * second}], [])
+macros["doIt2"] := New Macro([{button: 5, duration: 7500}], [])
+macros["level80"] := New Macro([{button: 2, duration: 41000}], [])
+macros["level7180"] := New Macro([{button: 4, duration: 41000}], [])
+macros["level80star1"] := New Macro([{button: 7, duration: 36000}, {button: 8, duration: 17500}], [food, tea])
+macros["level80star2special"] := New Macro([{button: 8, duration: 36300}, {button: 9, duration: 34300}], [food])
